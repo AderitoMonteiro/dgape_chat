@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block styles %}
+{% load static %}
+<link rel="stylesheet" href="{%static 'auth/style/style.css'%}">
+{% endblock %}
+
+{% block content %}
+<div class="wrapper" >
+    {% if error_message %}
+        <div class="alert alert-danger" role="alert">{{ error_message }}</div>
+      {% endif %}
+    <form method="post">
+      {% csrf_token %}
+      <h2>LOGIN</h2>
+        <div class="input-field">
+        <input type="text" id="username" name="username" required>
+        <label>Insira seu username</label>
+      </div>
+      <div class="input-field">
+        <input type="password" id="password" name="password" required>
+        <label>Digite sua senha</label>
+      </div>
+      <div class="forget">
+        <label for="remember">
+          <input type="checkbox" id="remember">
+          <p>Remember me</p>
+        </label>
+      </div>
+      <button type="submit">Log In</button>
+      <div class="register">
+      </div>
+    </form>
+  </div>
+{% endblock %}
+

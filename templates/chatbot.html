@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+{% load static %} 
+
+<link href="{% static 'style.css'  %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+<div class="app">
+
+    <!-- Menu Lateral -->
+    <aside class="sidebar">
+        <h2>ChatGPT</h2>
+        <button class="new-chat">+ Novo chat</button>
+
+        <div class="chat-list">
+          <!--
+            <div class="chat-item active">Conversa 1</div>
+            <div class="chat-item">Conversa 2</div>
+            <div class="chat-item">Conversa 3</div>-->
+        </div>
+
+       <div class="sidebar-user">
+            <div class="user-info" onclick="toggleUserMenu()">
+                <div class="user-avatar">🧑</div>
+                <div class="user-name">{{user.username}}</div>
+            </div>
+             <div class="user-menu" id="userMenu">
+                <a class="logout" href="logout">Sair</a>
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- Área principal -->
+    <main class="main">
+
+        <!-- Chat -->
+        <div class="chat-container">
+
+              {% for chat in chats %}
+                {% if chat.user == request.user %}
+
+                  
+
+                <div class="message user">
+                    <div class="bubble">
+                         {{chat.message}}
+                    </div>
+                    <div class="avatar">🧑</div>
+                </div>
+
+                <div class="message bot">
+                    <div class="avatar">🤖</div>
+                    <div class="bubble">
+                            {{chat.response}}
+                    </div>
+                </div>
+
+            {% endif %}
+            {% endfor %}
+
+            <!-- Indicador de digitação -->
+             <div class="message bot" >
+              <div class="avatar">🤖</div>
+              <div class="bubble typing-indicator">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+              </div>
+          </div>
+
+        </div>
+
+        <!-- Input -->
+        <div class="input-area">
+            <input type="text" class="message-input" placeholder="Digite sua mensagem..." />
+            <form class="message-form">
+                {%csrf_token%}
+             
+                <div class="input-group">
+                  <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary btn-send">Send</button>
+                  </div>
+                </div>
+            </form>
+        </div>
+
+    </main>
+
+<script>
+
+  const messagesList = document.querySelector('.chat-container');
+  const messageForm = document.querySelector('.message-form');
+  const messageInput = document.querySelector('.message-input');
+  
+  const typingIndicator = document.getElementById('typingIndicator');
+
+  messageForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const message = messageInput.value.trim();
+    if (message.length === 0) {
+      return;
+    }
+
+    const messageItem = document.createElement('div');
+    messageItem.setAttribute('class', 'message user');
+    messageItem.classList.add('message', 'sent');
+    messageItem.innerHTML = `
+                    <div class="bubble">
+                          ${message}
+                    </div>
+                    <div class="avatar">🧑</div>
+                    `;
+    messagesList.appendChild(messageItem);
+
+    messageInput.value = '';
+
+  fetch('', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+        'message': message
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        const response = data.response;
+        const messageItem = document.createElement('div');
+        messageItem.setAttribute('class', 'message bot');
+        messageItem.classList.add('message', 'received');
+        messageItem.innerHTML = `
+         <div class="bubble">
+                         ${response}
+                     </div>
+         <div class="avatar">🤖</div>
+        `;
+        messagesList.appendChild(messageItem);
+      });
+  });
+
+</script>
+
+<script>
+      function toggleUserMenu() {
+          const menu = document.getElementById("userMenu");
+          menu.classList.toggle("show");
+      }
+</script>
+
+{% endblock %}
