@@ -6,7 +6,6 @@ from django.shortcuts import render,redirect
 from chatbot.services.rag import build_index, search, build_prompt
 
 from openai import OpenAI
-
 from .models import Chat
 
 openai_api_key ="" # Replace YOUR_API_KEY with your openai apikey
