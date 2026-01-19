@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+{% load static %} 
+
+<link href="{% static 'style.css'  %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+<div class="app">
+
+    <!-- Menu Lateral -->
+    <aside class="sidebar">
+        <h2>ChatGPT</h2>
+        <button class="new-chat">+ Novo chat</button>
+
+        <div class="chat-list">
+          <!--
+            <div class="chat-item active">Conversa 1</div>
+            <div class="chat-item">Conversa 2</div>
+            <div class="chat-item">Conversa 3</div>-->
+        </div>
+
+       <div class="sidebar-user">
+            <div class="user-info" onclick="toggleUserMenu()">
+                <div class="user-avatar">🧑</div>
+                <div class="user-name">{{user.username}}</div>
+            </div>
+             <div class="user-menu" id="userMenu">
+                <button class="logout" id="logoutBtn">Sair</button>
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- Área principal -->
+    <main class="main">
+
+        <!-- Chat -->
+        <div id="chat-container" class="chat-container">
+
+              {% for chat in chats %}
+                {% if chat.user == request.user %}
+
+                  
+
+                <div class="message user">
+                    <div class="bubble">
+                         {{chat.message}}
+                    </div>
+                    <div class="avatar">🧑</div>
+                </div>
+
+                <div class="message bot">
+                    <div class="avatar">🤖</div>
+                    <div class="bubble">
+                            {{chat.response}}
+                    </div>
+                </div>
+
+            {% endif %}
+            {% endfor %}
+
+            <!-- Indicador de digitação -->
+
+        </div>
+
+        <div id="scrollBtnWrapper" class="scroll-btn-wrapper">
+            <button id="scrollBottomBtn" onclick="scrollToBottom()">
+                ↓ Ir para o fundo
+            </button>
+        </div>
+
+        <!-- Input -->
+        <div class="input-area">
+            <input type="text" class="message-input" id="messageInput" placeholder="Digite sua mensagem..." />
+            <form class="message-form">
+                {%csrf_token%}
+             
+                <div class="input-group">
+                  <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary btn-send">Send</button>
+                  </div>
+                </div>
+            </form>
+        </div>
+
+    </main>
+
+ <script src="{% static 'jscript.js' %}"></script>
+
+{% endblock %}
