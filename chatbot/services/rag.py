@@ -50,63 +50,16 @@ def normalize_question(question):
     Pergunta jurídica eleitoral:
     {question}
     Contexto: legislação eleitoral, prazos, direitos do eleitor,
-    procedimentos legais, reclamações, recursos, eleições, artigo.
-    Recenseamento Eleitoral na Diáspora atraves do PortalConsular.
-    O que e o recenseamento eleitoral na diáspora atraves do portal consular.
-    Quem pode recensear-se.
-    Como sei se estou recenseado.
-    Ate quando posso inscrever-me.
-    Como validar documentos emitidos fora de Cabo Verde.
-    Onde faço a inscrição.
-    Que documentos são necessários.
-    Como são tratadas reclamações.
-    Quanto custa o recenseamento.
-    Como garanto a segurança dos meus dados.
-    Quais são os principais benefícios do recenseamento via Portal Consular.
-    É possível fazer recenseamento fora das embaixadas e consulados.
-    Quem contactar em caso dúvidas.
-    Como faço para acessar o Portal Consular.
-    O que fazer se não encontrar meu registo na pesquisa.
-    Preciso apresentar comprovativo de residência no estrangeiro.
-    Posso reutilizar dados biometricos já recolhidos.
-    O que fazer se não for possível recolher biometria por deficiência.
-    Qual a diferença entre transferência e atualização de dados.   
-    Posso fazer o recenseamento junto com o pedido de passaporte ou CNI.
-    Quanto tempo demora para o recenseamento ser aprovado.
-    Como proceder em caso de eliminação do pedido por falta de documentação.
-    O que fazer se perder o comprovante (verbete) de inscrição.
-    O que e a CRE (Comissão de Recenseamento Eleitoral) e qual sua função.
-    Posso recensear-me se estiver temporariamente fora do país de residência.
-    Existe atendimento presencial para dúvidas sobre o recenseamento online.
-    Quais são os princípios do recenseamento.
-    O que e necessário para transferir o recenseamento para outra localidade dentro
-do mesmo país.
-    O que acontece se eu tentar recensear-me em mais de um local.
-    Como proceder em caso de mudança de nome (por casamento, por exemplo).
-    O que e um pedido de atualização e quando devo utilizá-lo.
-    Quem fiscaliza este processo.
-    Como posso saber o consulado mais próximo de mim.
-    O que fazer se meus dados estiverem errados.
-    Posso votar online depois de recensear-me.
-    O que e a BDRE.
-    Quais países concentram mais eleitores cabo-verdianos.
-    O recenseamento e obrigatório.
-    O que acontece se eu não me recensear.
-    Posso recensear-me se tiver dupla nacionalidade.
-    Como funciona a atualização dos cadernos eleitorais.
-    Posso alterar meu local de voto.
-    Quem administra a Base de Dados do Recenseamento Eleitoral (BDRE).
-    Posso recensear-me fora do prazo.
-    Como funciona o recenseamento para cidadãos que vivem em áreas sem
-consulado.
-    O sistema envia notificações após a conclusão do recenseamento.
-    Posso usar documento digital (ex.: versão eletrônica do CNI).
-    É necessário apresentar foto recente para atualização.
-    Como validar documentos emitidos fora de Cabo Verde.
-    Como proceder se meu nome não aparece nos cadernos eleitorais mesmo após
-recenseamento.
-   Existe atendimento telefônico para dúvidas.
-   Há suporte em outros idiomas alem do português.
+    procedimentos legais, reclamações, recursos, eleições, artigo. voto antecipado,como proceder em caso de querer voto antecipado,
+    locais de votação, documentos necessários. como votar, elegibilidade, candidaturas,
+    financiamento de campanhas, conduta eleitoral, fiscalização, apuração de votos,
+    como contestar resultados eleitorais. como denunciar irregularidades eleitorais.
+    como obter informações sobre eleições. como participar como voluntário em campanhas eleitorais.
+    como acompanhar notícias sobre eleições,como entender o sistema eleitoral,como funciona o processo eleitoral,
+    como são organizadas as eleições,quais são os tipos de eleições,quais são os órgãos eleitorais,
+    quais são os direitos e deveres dos eleitores,quais são as penalidades por infrações eleitorais,
+    quais são os prazos para cada etapa do processo eleitoral,como funcionam as urnas, como é feita a apuração dos votos,
+    .
  """
 
 
@@ -125,16 +78,16 @@ def search(question, index, chunks, k=4):
 
 def build_prompt(context, question):
     return f"""
-  Responde APENAS com base no contexto abaixo.
-  
-  REGRAS OBRIGATÓRIAS:
-- NÃO menciones artigos, números, FAQs, leis, normas ou referências.
-- NÃO cites fontes entre parênteses.
-- NÃO uses expressões como "artigo X", "FAQ Y", "segundo a lei".
-- Responde apenas de forma clara, direta e explicativa.
+            Responde APENAS com base no contexto abaixo.
+            
+            REGRAS OBRIGATÓRIAS:
+            - NÃO menciones artigos, números, FAQs, leis, normas ou referências.
+            - NÃO cites fontes entre parênteses.
+            - NÃO uses expressões como "artigo X", "FAQ Y", "segundo a lei".
+            - Responde apenas de forma clara, direta e explicativa.
+            - Se a informação não existir no contexto, responde apenas:
+            - Não existe informação disponível no contexto fornecido."
 
- Se a informação não existir no contexto, responde apenas:
-"Não existe informação disponível no contexto fornecido."
 
 CONTEXTO:
 {context}

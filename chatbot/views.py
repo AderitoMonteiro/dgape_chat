@@ -16,6 +16,7 @@ openai_api_key =settings.SECRET_KEY
 client = OpenAI(api_key=openai_api_key)
 
 def ask_openai_with_docs(message, user):
+    
     history = get_conversation_history(user)
     context_chunks = search(message, INDEX, CHUNKS)
     context = "\n\n".join(context_chunks)
@@ -27,7 +28,7 @@ def ask_openai_with_docs(message, user):
             "role": "system",
             "content": (
                 "És um assistente jurídico eleitoral. "
-                "Usa APENAS o contexto legal fornecido e o histórico da conversa. "
+                "Usa APENAS o contexto legal fornecido e o histórico da conversa."
                 "Mantém coerência com respostas anteriores. "
                 "Se não existir base legal, diz claramente."
             )

@@ -37,7 +37,7 @@
 
     messagesList.appendChild(messageItem);
     messagesList.appendChild(message_chat);
-
+    scrollToBottom();
     messageInput.value = '';
 
   fetch('', {
@@ -55,10 +55,11 @@
         messageItem.setAttribute('class', 'message bot');
         messageItem.classList.add('message', 'received');
         messageItem.innerHTML = `
+         <div class="avatar">🤖</div>
          <div class="bubble">
                          ${response}
                      </div>
-         <div class="avatar">🤖</div>
+        
         `;
          message_chat.remove();
          message_chat = null;
@@ -90,6 +91,8 @@ const logoutBtn = document.getElementById('logoutBtn');
 const chat = document.getElementById("chat-container");
 const scrollBtnWrapper = document.getElementById("scrollBtnWrapper");
 
+const SHOW_BUTTON_OFFSET = 300; // ajusta (200–400)
+
 function scrollToBottom() {
     chat.scrollTo({
         top: chat.scrollHeight,
@@ -97,13 +100,15 @@ function scrollToBottom() {
     });
 }
 
-/* Mostrar botão só quando NÃO está no fundo */
+/* Mostrar botão só quando estiver um pouco acima do fundo */
 chat.addEventListener("scroll", () => {
-    const isAtBottom =
-        chat.scrollTop + chat.clientHeight >= chat.scrollHeight - 10;
+    const distanceFromBottom =
+        chat.scrollHeight - (chat.scrollTop + chat.clientHeight);
 
-    scrollBtnWrapper.style.display = isAtBottom ? "none" : "flex";
+    scrollBtnWrapper.style.display =
+        distanceFromBottom > SHOW_BUTTON_OFFSET ? "flex" : "none";
 });
+
 
 /* Ao carregar a página, ir para o fundo */
 window.onload = () => {
@@ -155,7 +160,7 @@ function sendMessage() {
 
     messagesList.appendChild(messageItem);
     messagesList.appendChild(message_chat);
-
+    scrollToBottom();
     messageInput.value = '';
 
   fetch('', {
@@ -173,10 +178,10 @@ function sendMessage() {
         messageItem.setAttribute('class', 'message bot');
         messageItem.classList.add('message', 'received');
         messageItem.innerHTML = `
+         <div class="avatar">🤖</div>
          <div class="bubble">
                          ${response}
-                     </div>
-         <div class="avatar">🤖</div>
+          </div>
         `;
          message_chat.remove();
          message_chat = null;
